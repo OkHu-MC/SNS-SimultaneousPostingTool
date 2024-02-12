@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+
+<link rel="stylesheet" href="checkbox.css" />
+<title>SNS同時投稿（仮）</title>
+
+
+
+
+
+<style>
+  /* チェックボックスの非表示 */
+  .checkbox-input {
+    display: none;
+  }
+  
+  /* チェックボックスのカスタムスタイル */
+  .checkbox-customF {
+    display: inline-block;
+    width: 256px;
+    height: 64px;
+    background-image: url('Foff.png'); /* チェックボックスOFF時の画像 */
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+  }
+  
+  /* チェックボックスがチェックされたときのカスタムスタイル */
+  .checkbox-customF.checked {
+    background-image: url('Fon.png'); /* チェックボックスON時の画像 */
+  }
+    /* チェックボックスのカスタムスタイル */
+  .checkbox-customX {
+    display: inline-block;
+    width: 256px;
+    height: 64px;
+    background-image: url('Xoff.png'); /* チェックボックスOFF時の画像 */
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+  }
+  
+  /* チェックボックスがチェックされたときのカスタムスタイル */
+  .checkbox-customX.checked {
+    background-image: url('Xon.png'); /* チェックボックスON時の画像 */
+  }
+    /* チェックボックスのカスタムスタイル */
+  .checkbox-customL {
+    display: inline-block;
+    width: 256px;
+    height: 64px;
+    background-image: url('lineoff.png'); /* チェックボックスOFF時の画像 */
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+  }
+  
+  /* チェックボックスがチェックされたときのカスタムスタイル */
+  .checkbox-customL.checked {
+    background-image: url('lineon.png'); /* チェックボックスON時の画像 */
+  }
+
+
+    .checkbox-customM {
+    display: inline-block;
+    width: 256px;
+    height: 64px;
+    background-image: url('Moff.png'); /* チェックボックスOFF時の画像 */
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+  }
+  
+  /* チェックボックスがチェックされたときのカスタムスタイル */
+  .checkbox-customM.checked {
+    background-image: url('Mon.png'); /* チェックボックスON時の画像 */
+  }
+/*
+.mixi-check-button{
+display:none!important;
+visibility: hidden;
+}
+#mixi-share-button{
+display:none!important;
+visibility: hidden;
+}*/
+</style>
+
+
+<!--a hidden id="mixi-share-button" href="https://mixi.jp/share.pl" class="mixi-check-button" data-button="button-6" data-key="test" data-url="youtube.com" data-text="お願いします">チェック</a>
+<script type="text/javascript" src="https://static.mixi.jp/js/share.js"></script-->
+
+
+
+
+
+
+
+
+
+</head>
+<body id="SNSup"> 
+    <!--<p>誰に送信する？(@不要)</p>-->
+    <!--<Input type="text" id="test1" value="test" style="width:400px; height:100px;">-->
+    <h1>SMS　同時投稿（ベータ版）</h1>
+    <section class="texts">
+        
+    
+    <p>シェアしたいURL</p>
+    <textarea id="test2" name="test2" rows="5" cols="33"></textarea>
+
+    <p>ハッシュタグ（#不要です　複数個はカンマ区切り　コレ⇒　,　）</p>
+    <textarea id="test3" name="test3" rows="5" cols="33"></textarea>
+
+    <p>コンテンツ（本文、全部ここに書く方が分かりやすいかもね）</p>
+    <textarea id="test4" name="test4" rows="8" cols="40"></textarea>
+
+
+    </section>
+<section class="Button-obj">
+
+
+
+<a class="btn-emergency-real" onclick="clicked()" id="button">
+  <span class="btn-emergency-real-bottom"></span>
+  <span class="btn-emergency-real-top"><span>生成！</span></span>
+</a>
+    <div id="text"></div>
+
+</section>
+
+
+
+    <section class="Toggle-SNS">
+<!--p>
+  <label class="check-box" for="check03" py-click="flag(1)">
+    <input type="checkbox" id="check03"><span class="text">twitter</span>
+  </label>
+</p-->
+
+<label class="check-box" for="check01" >
+  <input type="checkbox" class="checkbox" onchange="toggleCheckbox('customCheckbox1', this)" id="check01">
+  <span class="checkbox-customX" id="customCheckbox1"></span>
+  </label>
+<br><br>
+<label class="check-box" for="check02">
+  <input type="checkbox" class="checkbox" onchange="toggleCheckbox('customCheckbox2', this)" id="check02">
+  <span class="checkbox-customL" id="customCheckbox2"></span>
+</label>
+<br><br>
+<label class="check-box" for="check03">
+  <input type="checkbox" class="checkbox" onchange="toggleCheckbox('customCheckbox3', this)" id="check03">
+  <span class="checkbox-customF" id="customCheckbox3"></span>
+</label>
+<br><br>
+<label class="check-box" for="check04">
+  <input type="checkbox" class="checkbox" onchange="toggleCheckbox('customCheckbox4', this)" id="check04">
+  <span class="checkbox-customM" id="customCheckbox4"></span>
+</label>
+<br><br>
+<div id="text">
+    
+</div>
+
+<script>
+  function toggleCheckbox(id, checkbox) {
+    console.log(id)
+    const customCheckbox = document.getElementById(id);
+    flag(id)
+    if (checkbox.checked) {
+      customCheckbox.classList.add('checked');
+    } else {
+      customCheckbox.classList.remove('checked');
+    }
+  }
+</script>
+<script>
+let tw = false;
+let line = false;
+let face =false;
+let Misk
+console.log(`tw:${tw}/line:${line}`);
+
+function flag(fl) {
+    console.log("\n"+fl+"\n")
+    if (fl === "customCheckbox1") {
+        tw = !tw;
+    }
+    if (fl === "customCheckbox2") {
+        line = !line;
+    }
+    if (fl === "customCheckbox3") {
+        face = !face;
+    }
+    if (fl === "customCheckbox4") {
+        Misk = !Misk;
+    }
+    console.log(`twitter:${tw}  line:${!line}`);
+}
+
+function text_out_data(output_text) {
+    let text2 = document.getElementById("test2").value;
+    let text3 = document.getElementById("test3").value;
+    let text4 = document.getElementById("test4").value;
+    let flag = 0;
+    
+    if (text2 !== "") {
+        if (flag === 1) {
+            output_text += "&";
+        }
+        output_text += `url=${encodeURIComponent(text2)}`;
+        flag = 1;
+    }
+    if (text3 !== "") {
+        if (flag === 1) {
+            output_text += "&";
+        }
+        output_text += `hashtags=${encodeURIComponent(text3)}`;
+        flag = 1;
+    }
+    if (text4 !== "") {
+        if (flag === 1) {
+            output_text += "&";
+        }
+        output_text += `text=${encodeURIComponent(text4)}`;
+        flag = 1;
+    }
+    return output_text;
+}
+
+
+
+
+function line_output() {
+    let text2 = document.getElementById("test2").value;
+    let text3 = document.getElementById("test3").value;
+    let text4 = document.getElementById("test4").value;
+    let flag = 0;
+    let output_text="https://line.me/R/share?text="
+    
+    if (text4 !== "") {
+        output_text += encodeURIComponent(text4);
+        flag = 1;
+    }
+
+    if (text2 !== "") {
+        if (flag === 1) {
+            output_text +=encodeURIComponent("\n\n");
+        }
+        output_text += encodeURIComponent(text2);
+        flag = 1;
+    }
+
+
+    return output_text;
+}
+function face_output() {
+    let text2 = document.getElementById("test2").value;
+    let text3 = document.getElementById("test3").value;
+    let text4 = document.getElementById("test4").value;
+    let flag = 0;
+    let output_text="https://www.facebook.com/sharer/sharer.php?"
+    console.log("u:",text2)
+    console.log("t:",test4)
+    if (text2 !== "") {
+        output_text+="u="
+        output_text += encodeURIComponent(text2);
+        flag = 1;
+    }
+
+    if (text4 !== "") {
+        if (flag === 1) {
+            output_text+="&"
+        output_text+="quote="
+        output_text += encodeURIComponent(text4);
+        }
+    }
+
+
+    return output_text;
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+
+
+
+
+function clicked() {
+    let Xtext = "";
+    console.clear()
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+    if (tw) {
+        Xtext += `こちらの文をtwitterに送信する文を生成しました\n${text_out_data('http://twitter.com/share?')}\n`;
+    }
+    if (line) {
+        Xtext += `\n<br>こちらの文をLineに送信する文を生成しました\n${line_output()}\n`;
+    }
+    if (face) {
+        Xtext += `\n<br>こちらの文をLineに送信する文を生成しました\n${face_output()}\n`;
+    }
+    if (Misk) {
+        Xtext += `\n<br>こちらの文をLineに送信する文を生成しました\n${text_out_data("https://misskeyshare.link/share.html?")}\n`;
+    }
+
+
+
+   document.getElementById("text").innerHTML = Xtext;
+
+  console.log('処理を開始します');
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// 使用例
+console.log('処理を開始します');
+sleep(2000).then(() => {
+  console.log('2秒経過しました');
+if(tw){
+window.open(text_out_data('http://twitter.com/share?'), '_blank'); 
+}
+
+if (line)  {
+    window.open(line_output(), '_blank'); 
+}
+
+if (face)  {
+    window.open(face_output(), '_blank'); 
+}
+
+if (Misk)  {
+    window.open(text_out_data("https://misskeyshare.link/share.html?"), '_blank'); 
+}
+if (Mixi){
+document.getElementById("mixi-share-button").click()
+
+    
+}
+
+
+
+});
+}
+
+
+
+
+
+</script>
+
+
+
+    </section>
+
+
+
+</body>
+</html>
